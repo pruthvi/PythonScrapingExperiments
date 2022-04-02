@@ -23,22 +23,17 @@ for row in rows:
     links = row.find_elements(By.XPATH, './/td[2]/a')
     for link in links:
         company_link = link.get_attribute('href')
-
-
     print(ref,company,company_link,site,ins_date,rating,clicense)
 
+    # Open a new window
+    driver.execute_script("window.open('');")
+    driver.switch_to.window(driver.window_handles[1])
+    driver.get(company_link)
+    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, '//*[@id="inspectionTable"]/tr[1]/td[1]')))
+    location = driver.find_element(By.ID, 'address')
+    print(location.text)
 
 
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
 
-
-#    links = row.find_elements(By.XPATH, './/td[2]/a')  # Company Name
-#   print(row.get_attribute('href')) #prints text from the element
-
-
-
-# rowdatas = driver.findElements
-# # //*[@id="tbodyMain"]/tr[1]/td[2]/a
-#
-# for row in rowdatas:
-#     name = row.find_element_by_xpath('.//*[@id="tbodyMain"]/tr[1]/td[2]/a').text
-#     print(name)
